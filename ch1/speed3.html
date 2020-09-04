@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>velocity</title>
+  <script>
+    let ctx;
+    let posX = 0;
+    let posY = 600;
+    let velocityX = 5;
+    let velocityY = -20;
+    let accelY = 0.5;
+
+    const circle_r = 10;
+
+    function init() {
+      ctx = document.getElementById("viewer").getContext("2d");
+      setInterval(tick, 100);
+    }
+
+    function tick() {
+      posX += velocityX;
+      velocityY += accelY;
+      posY += velocityY;
+      if (posX > 600) {
+        posX = 0;
+      }
+      if (posY > (600 - (circle_r*2))) {
+        velocityY = -20;
+      }
+
+      paint();
+    }
+
+    function paint() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, 600, 600);
+      ctx.fillStyle = "white";
+      // ctx.fillRect(posX, posY, 10, 10);
+      ctx.beginPath();
+      ctx.arc(posX, posY, circle_r, 0, Math.PI*2, false);
+      ctx.fill();
+    }
+  </script>
+</head>
+<body onload="init()">
+  <canvas
+    id="viewer"
+    width="600"
+    height="600"
+    style="width: 600px; height: 600px;"
+  ></canvas>
+</body>
+</html>
